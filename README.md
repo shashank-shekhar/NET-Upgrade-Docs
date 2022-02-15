@@ -10,3 +10,5 @@
 |HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity)|DatabaseGeneratedOption.Identity|
 |HasOptional() | Not required, IsRequired(false) is an option|
 |HasOptional(x => x.PropertyName)| Modify the underlying proprty to be `virtual`|
+|dbContext.Entity.AddOrUpdate()| dbContext.Entity.Update()|
+|dbContext.Configuration.AutoDetectChangesEnabled|dbContext.ChangeTracker.AutoDetectChangesEnabled |
