@@ -13,3 +13,7 @@
 |dbContext.Entity.AddOrUpdate()| dbContext.Entity.Update()|
 |dbContext.Configuration.AutoDetectChangesEnabled|dbContext.ChangeTracker.AutoDetectChangesEnabled |
 |dbContext.Configuration.ProxyCreationEnabled|dbContext.ChangeTracker.LazyLoadingEnabled|
+|Configuration HasRequired(p=> p.Property) | builder.HasOne(p=>p.Property).WithMany(x=>x.property).IsRequired()|
+|Configuration WillCascadeOnDelete(true) | OnDelete(DeleteBehavior.Cascade)|
+|Configuration WillCascadeOnDelete(false) | OnDelete(DeleteBehavior.ClientSetNull)|
+
