@@ -12,3 +12,4 @@
 |HasOptional(x => x.PropertyName)| Modify the underlying proprty to be `virtual`|
 |dbContext.Entity.AddOrUpdate()| dbContext.Entity.Update()|
 |dbContext.Configuration.AutoDetectChangesEnabled|dbContext.ChangeTracker.AutoDetectChangesEnabled |
+|dbContext.Configuration.ProxyCreationEnabled|dbContext.ChangeTracker.LazyLoadingEnabled|
