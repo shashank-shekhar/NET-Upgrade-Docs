@@ -17,4 +17,5 @@
 |Configuration WillCascadeOnDelete(true) | OnDelete(DeleteBehavior.Cascade)|
 |Configuration WillCascadeOnDelete(false) | OnDelete(DeleteBehavior.ClientSetNull)|
 | ObjectNotFoundException | DbUpdateException|
+| Enum DataType | Configuration: .HasConversion<int>()|
 
