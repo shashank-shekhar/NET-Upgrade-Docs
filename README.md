@@ -19,3 +19,8 @@
 | ObjectNotFoundException | DbUpdateException|
 | Enum DataType | Configuration: .HasConversion<int>()|
 
+
+## ASP.NET
+|FullFramework| NetStandard/6+|  
+|-----|-----|  
+|CacheItemPriority| Microsoft.Extensions.Caching.Memory|  
