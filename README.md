@@ -23,4 +23,5 @@
 ## ASP.NET
 |FullFramework| NetStandard/6+|  
 |-----|-----|  
-|CacheItemPriority| Microsoft.Extensions.Caching.Memory|  
+|CacheItemPriority| Microsoft.Extensions.Caching.Memory| 
+|HttpContext.Request.Url| Microsoft.AspNetCore.Http.Extensions.UriHelper.GetFullUrl(Request)|
