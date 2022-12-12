@@ -26,5 +26,6 @@
 |CacheItemPriority| Microsoft.Extensions.Caching.Memory| 
 |HttpContext.Request.Url| Microsoft.AspNetCore.Http.Extensions.UriHelper.GetEncodedUrl/GetDisplayUrl(Request)|
 |HttpContext.Request.UserHostAddress| HttpContext.Connection.RemoteIpAddress|  
-|HttpActionContext.Response| ActionExecutingContext.Result = new StatusCodeResult|  
+|HttpActionContext.Response| ActionExecutingContext.Result = new StatusCodeResult|
+| HttpRequest.InputStream | HttpRequest.Body|
   
