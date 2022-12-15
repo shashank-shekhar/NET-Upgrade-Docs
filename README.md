@@ -28,4 +28,5 @@
 |HttpContext.Request.UserHostAddress| HttpContext.Connection.RemoteIpAddress|  
 |HttpActionContext.Response| ActionExecutingContext.Result = new StatusCodeResult|
 | HttpRequest.InputStream | HttpRequest.Body|
-  
+|Url.Encode|Uri.EscapeDataString(someString)|  
+ 
