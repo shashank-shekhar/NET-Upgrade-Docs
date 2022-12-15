@@ -29,4 +29,5 @@
 |HttpActionContext.Response| ActionExecutingContext.Result = new StatusCodeResult|
 | HttpRequest.InputStream | HttpRequest.Body|
 |Url.Encode|Uri.EscapeDataString(someString)|  
+|Controller.ValueProvider.GetValue("action")|Context.GetRouteData().Values["action"]|
  
