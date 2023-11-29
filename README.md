@@ -11,7 +11,8 @@
 1.  Walk up the dependency tree starting with the class library project that has no project dependencies and upgrade it to `netstandard2.0`.
 1.  Upgrade the test projects last.
 
-> Tools: https://apisof.net/upgrade-planner use upgrade planner to help pick suitable projects to upgrade and identify issues with upgrade
+> If upgrading from WebForm (aspx), convert all pages to Razor (cshtml) before upgrading.
+> Tools: https://apisof.net/upgrade-planner use upgrade planner to help pick suitable projects to upgrade and identify issues with upgrade.
 
 ## ASP.NET
 
@@ -27,6 +28,16 @@
 | Controller.ValueProvider.GetValue("action") | Context.GetRouteData().Values["action"]                                             |
 | Controller.Session                          | HttpContext.Session                                                                 |
 | [ScriptIgnore]                              | [JsonIgnore]                                                                        |
+| `<script nonce="custom-method-call">` | `asp-add-nonce="true"` |
+|[HandleError] | Add an error controller and configure middleware to handle it. [Link](https://learn.microsoft.com/en-us/aspnet/core/web-api/handle-errors?view=aspnetcore-8.0) |
+|||
+
+## WebForms to Razor
+| WebForms | Razor|  
+|--|--|
+|`<%=`| `@`|
+|ResolveUrl| Url.Content|
+||| 
 
 ## Microsoft Libraries
 
