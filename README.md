@@ -16,28 +16,35 @@
 
 ## ASP.NET
 
-| FullFramework                               | NetStandard/6+                                                                      |
-| ------------------------------------------- | ----------------------------------------------------------------------------------- |
-| CacheItemPriority                           | Microsoft.Extensions.Caching.Memory                                                 |
-| HttpContext.Request.Url                     | Microsoft.AspNetCore.Http.Extensions.UriHelper.GetEncodedUrl/GetDisplayUrl(Request) |
-| HttpContext.Request.UserHostAddress         | HttpContext.Connection.RemoteIpAddress                                              |
-| HttpActionContext.Response                  | ActionExecutingContext.Result = new StatusCodeResult                                |
-| HttpRequest.InputStream                     | HttpRequest.Body                                                                    |
-| Url.Encode                                  | Uri.EscapeDataString(someString)                                                    |
-| HttpCookie                                  | Microsoft.AspNetCore.Http.CookieOptions                                             |
-| Controller.ValueProvider.GetValue("action") | Context.GetRouteData().Values["action"]                                             |
-| Controller.Session                          | HttpContext.Session                                                                 |
-| [ScriptIgnore]                              | [JsonIgnore]                                                                        |
-| `<script nonce="custom-method-call">` | `asp-add-nonce="true"` |
-|[HandleError] | Add an error controller and configure middleware to handle it. [Link](https://learn.microsoft.com/en-us/aspnet/core/web-api/handle-errors?view=aspnetcore-8.0) |
-|||
+| FullFramework                                                  | NetStandard/6+                                                                                                                                                 |
+| -------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| CacheItemPriority                                              | Microsoft.Extensions.Caching.Memory                                                                                                                            |
+| HttpContext.Request.Url                                        | Microsoft.AspNetCore.Http.Extensions.UriHelper.GetEncodedUrl/GetDisplayUrl(Request)                                                                            |
+| HttpContext.Request.UserHostAddress                            | HttpContext.Connection.RemoteIpAddress                                                                                                                         |
+| HttpActionContext.Response                                     | ActionExecutingContext.Result = new StatusCodeResult                                                                                                           |
+| HttpRequest.InputStream                                        | HttpRequest.Body                                                                                                                                               |
+| Url.Encode                                                     | Uri.EscapeDataString(someString)                                                                                                                               |
+| HttpCookie                                                     | Microsoft.AspNetCore.Http.CookieOptions                                                                                                                        |
+| Controller.ValueProvider.GetValue("action")                    | Context.GetRouteData().Values["action"]                                                                                                                        |
+| Controller.Session["key"]                                             | HttpContext.Session.GetString("key")                                                                                                                                            |
+| HttpContext.Server.MapPath                                     | IWebHostEnvironment.ContentRootPath                                                                                                                            |
+| `[ScriptIgnore]`                                               | `[JsonIgnore]`                                                                                                                                                 |
+| `<script nonce="custom-method-call">`                          | `asp-add-nonce="true"`                                                                                                                                         |
+| `[HandleError]`                                                  | Add an error controller and configure middleware to handle it. [Link](https://learn.microsoft.com/en-us/aspnet/core/web-api/handle-errors?view=aspnetcore-8.0) |
+| `Request.QueryString["ReturnUrl"]`                             | `Request.Query.TryGetValue("ReturnUrl")`/ `Request.Query["ReturnUrl"]`                                                                                         |
+| Cache busting - Assembly.VersionInfo                           | `asp-append-version="true"`                                                                                                                                    |
+|                                                                |                                                                                                                                                                |
+| `[PrincipalPermission(SecurityAction.Demand, Role = "Admin")]` | `[Authorize(Role="Admin")]`                                                                                                                                    |
 
 ## WebForms to Razor
-| WebForms | Razor|  
-|--|--|
-|`<%=`| `@`|
-|ResolveUrl| Url.Content|
-||| 
+| WebForms                          | Razor                                                                                                               |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `<%= .. %>`                       | `@( .. )`                                                                                                           |
+| `<%`                              | `@{`  If multiple such lines exist replace the closing `%>` with `}`                                                |
+| `<% if`                           | `@if`  All `<%` tags following the first `if` need to be removed. For automation keep track of braces               |
+| `<% using (Html.BeginForm()) {%>` | `<form asp-action='Action_Name' controller='Controller_Name method="post">` keep track of the controller and action |
+| ResolveUrl                        | Url.Content                                                                                                         |
+|                                   |                                                                                                                     |
 
 ## Microsoft Libraries
 
@@ -103,3 +110,15 @@ Add the following to the csproj of the asp.net project
 ```xml
 <Reference Include="netstandard" />
 ```
+
+
+## Side by Side upgrade
+1. Create a `wwwroot` folder and copy all static assets there.
+1. If any React/Angular project exist their dist should end up in the `wwwroot` folder as well.
+
+
+### Useful RegEx patterns
+1. Context.Session["key"] to HttpContext.Session.GetString("key")
+   1. Find and replace Context with HttpContext and then use this for the remaining transformation
+      1. Find: `HttpContext\.Session\[(?<key>.*)\]`
+      2. Replace: `HttpContext.Session.GetString(${key})`
