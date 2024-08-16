@@ -33,10 +33,13 @@
 | `[HandleError]`                                                                                | Add an error controller and configure middleware to handle it. [Link](https://learn.microsoft.com/en-us/aspnet/core/web-api/handle-errors?view=aspnetcore-8.0) |
 | `Request.QueryString["ReturnUrl"]`                                                             | `Request.Query.TryGetValue("ReturnUrl")`/ `Request.Query["ReturnUrl"]`                                                                                         |
 | Cache busting - Assembly.VersionInfo                                                           | `asp-append-version="true"`                                                                                                                                    |
-|                                                                                                |                                                                                                                                                                |
 | `[PrincipalPermission(SecurityAction.Demand, Role = "Admin")]`                                 | `[Authorize(Role="Admin")]`                                                                                                                                    |
 | `Response.Cookies.Add(new HttpCookie("COOKIE_NAME") { Expires = DateTime.Now.AddYears(-1) });` | `Response.Cookies.Append("COOKIE_NAME","", new CookieOptions { Expires = DateTime.Now.AddYears(-1) });`                                                        |
 | `MvcHtmlString`                                                                                | `Microsoft.AspNetCore.Html.HtmlString`                                                                                                                         |
+| ` ViewDataDictionary{ { "Key", "Value" } }`                                                    | `ViewDataDictionary(ViewData){ { "Key", "Value" } }`                                                                                                           |
+| `@helper DoHelpfulStuff(){// logic}`                                                           | `@ {void DoHelpfulStuff(){// logic}}`  invoke using `@{DoHelpfulStuff();}`                                                                                     |
+| `Request.Headers.GetCookies()`                                                                 | `Request.Cookies`                                                                                                                                              |
+| `request.ServerVariables["HTTP_X_FORWARDED_FOR"]` | `
 
 
 ## WebForms to Razor
@@ -125,3 +128,34 @@ Add the following to the csproj of the asp.net project
    1. Find and replace Context with HttpContext and then use this for the remaining transformation
       1. Find: `HttpContext\.Session\[(?<key>.*)\]`
       2. Replace: `HttpContext.Session.GetString(${key})`
+
+### Dependency Injection
+ . Dependency resolution in controller without updating the controller: `HttpContext.RequestServices.GetService<YOUR_DEPENDENCY>();`
+
+
+### Identity 
+```csharp
+await HttpContext.SignInAsync(
+	            CookieAuthenticationDefaults.AuthenticationScheme,
+	            new ClaimsPrincipal(CLAIMS_IDENTITY),
+	            new AuthenticationProperties { IsPersistent = false });
+```
+
+#### POSTing form using JS
+
+**OLD** 
+```cshtml
+<form id="FORM_ID"  method="post" action="@Url.Content("~/ACTION_NAME/" + ViewBag.YOUR_DATA)" />
+```
+**NEW**
+
+```cshtml
+<form id="FORM_ID" method="post" asp-route="@Url.Content("~/ACTION_NAME/" + ViewBag.YOUR_DATA)"  />
+```
+
+If not posting a query string or posting to a different controller 
+```cshtml
+<form id="FORM_ID" method="post" asp-action="ACTION_NAMe" asp-controller="CONTROLLER_NAME" />
+```
+
+
